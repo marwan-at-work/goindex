@@ -8,14 +8,14 @@ import (
 
 func TestGoIndex(t *testing.T) {
 	var c Client
-	mods, err := c.Get(context.Background(), time.Time{})
+	mods, err := c.Get(context.Background(), time.Time{}, 10)
 	if err != nil {
 		t.Fatal(err)
 	}
-	if len(mods) == 0 {
-		t.Fatal("unexpected zero length response")
+	if len(mods) != 10 {
+		t.Fatalf("expected 10 mods but got %d", len(mods))
 	}
-	next, err := mods.Next(context.Background(), &c)
+	next, err := mods.Next(context.Background(), &c, 0)
 	if err != nil {
 		t.Fatal(err)
 	}
